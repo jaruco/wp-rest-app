@@ -1,0 +1,198 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: API de Artículos
+  description: API para gestionar artículos
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+host: 'api.ejemplo.com'
+basePath: '/v1'
+schemes:
+  - https
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    name: X-API-KEY
+    in: header
+
+paths:
+  /articulos:
+    get:
+      operationId: 'getAllArticles'
+      summary: Obtener lista de artículos
+      description: Obtiene una lista de todos los artículos disponibles.
+      produces:
+        - application/json
+      security:
+        - ApiKeyAuth: []
+      responses:
+        200:
+          description: Lista de artículos
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Articulo'
+    post:
+      operationId: 'createArticle'
+      summary: Crear un nuevo artículo
+      description: Crea un nuevo artículo con los datos proporcionados.
+      consumes:
+        - application/json
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: body
+          name: body
+          description: Datos del artículo a crear.
+          required: true
+          schema:
+            $ref: '#/definitions/ArticuloCrear'
+      responses:
+        201:
+          description: Artículo creado
+        400:
+          description: Error en los datos proporcionados
+
+  /articulos/{id}:
+    get:
+      operationId: 'getArticleById'
+      summary: Obtener un artículo
+      description: Obtiene los detalles de un artículo específico por su ID.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: ID único del artículo (10 caracteres).
+          required: true
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Datos del artículo
+          schema:
+            $ref: '#/definitions/Articulo'
+        404:
+          description: Artículo no encontrado
+    put:
+      operationId: 'updateArticle'
+      summary: Actualizar un artículo
+      description: Actualiza los campos descripción, modelo de un artículo existente.
+      consumes:
+        - application/json
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: ID único del artículo (10 caracteres).
+          required: true
+        - in: body
+          name: body
+          description: Datos del artículo a actualizar.
+          required: true
+          schema:
+            $ref: '#/definitions/ArticuloActualizar'
+      responses:
+        200:
+          description: Artículo actualizado
+        400:
+          description: Error en los datos proporcionados
+        404:
+          description: Artículo no encontrado
+    delete:
+      operationId: 'deleteArticle'
+      summary: Eliminar un artículo
+      description: Elimina un artículo por su ID.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - in: path
+          name: id
+          type: string
+          description: ID único del artículo (10 caracteres).
+          required: true
+      responses:
+        204:
+          description: Artículo eliminado
+        404:
+          description: Artículo no encontrado
+
+definitions:
+  Articulo:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID único del artículo
+        maxLength: 10
+      nombre:
+        type: string
+        description: Nombre del artículo
+        maxLength: 20
+      descripcion:
+        type: string
+        description: Descripción del artículo
+        maxLength: 200
+      precio:
+        type: number
+        format: double
+        description: Precio del artículo (dos decimales)
+      modelo:
+        type: string
+        description: Modelo del artículo
+        maxLength: 10
+    required:
+      - id
+      - nombre
+      - descripcion
+      - precio
+      - modelo
+
+  ArticuloCrear:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID único del artículo
+        maxLength: 10
+      nombre:
+        type: string
+        description: Nombre del artículo
+        maxLength: 20
+      descripcion:
+        type: string
+        description: Descripción del artículo
+        maxLength: 200
+      precio:
+        type: number
+        format: double
+        description: Precio del artículo (dos decimales)
+      modelo:
+        type: string
+        description: Modelo del artículo
+        maxLength: 10
+    required:
+      - id
+      - nombre
+      - descripcion
+      - precio
+      - modelo
+
+  ArticuloActualizar:
+    type: object
+    properties:
+      descripcion:
+        type: string
+        description: Descripción del artículo
+        maxLength: 200
+      modelo:
+        type: string
+        description: Modelo del artículo
+        maxLength: 10
+    required:
+      - descripcion
+      - modelo

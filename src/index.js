@@ -1,17 +1,20 @@
-// src/index.js
 const express = require('express');
-const app = express();
-const port = 3000;
+const sequelize = require('./config/Database');
+const articulosRouter = require('./routes/Articulos');
 
-// Middleware para manejo de JSON
+const app = express();
+const PORT = 3000;
+
 app.use(express.json());
 
-// Ruta de ejemplo
-app.get('/api', (req, res) => {
-  res.json({ message: 'Hello, API REST with Webpack and Node.js!' });
-});
+app.use('/articulos', articulosRouter);
 
-// Inicia el servidor
-app.listen(port, () => {
-  console.log(`API escuchando en http://localhost:${port}`);
+app.listen(PORT, async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Conexión a la base de datos exitosa.');
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+  } catch (error) {
+    console.error('Error al conectar con la base de datos:', error);
+  }
 });

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --mode development",
     "start": "node dist/bundle.js",
     "dev": "nodemon dist/bundle.js",
     "watch": "webpack --watch"
@@ -13,7 +13,10 @@
   "author": "Jorge Ruiz",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "joi": "^17.13.3",
+    "mysql2": "^3.11.3",
+    "sequelize": "^6.37.3"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
