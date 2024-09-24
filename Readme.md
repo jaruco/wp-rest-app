@@ -6,7 +6,7 @@ El código de solución se encuentra en [github](https://github.com/jaruco/wp-re
 
 ## 2. Definición Open Api
 
-El archivo .yml de definición está en la carpeta __/docs__ del repositorio:
+El archivo .yml de definición está en la carpeta [__/docs__](https://github.com/jaruco/wp-rest-app/blob/development/docs/openapi.yaml) del repositorio:
 
 ## 3. Base de datos
 
