@@ -2,7 +2,7 @@ const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize(
   "db_name",
-  "user",
+  "root",
   "password",
   {
     host: "localhost",
